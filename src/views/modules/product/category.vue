@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-button type="danger" @click="batchDelete">批量删除</el-button>
     <el-tree :data="dataSource" :props="defaultProps" :expand-on-click-node="false" show-checkbox node-key="id" :default-expanded-keys="expandedKey" ref="menuTree">
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }} </span>
@@ -140,6 +141,35 @@ export default {
         this.getList()
         // 设置需要默认展开的菜单
         this.expandedKey = [this.dataForm.parentId]
+      })
+    },
+    batchDelete () {
+      let selectIds = this.$refs.menuTree.getCheckedKeys()
+      this.$confirm(`是否批量删除【${selectIds}】菜单?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http({
+          url: this.$http.adornUrl(this.url.deleteBatch),
+          method: 'post',
+          data: selectIds
+        }).then(({ data }) => {
+          if (data.code === 200) {
+            this.$message({
+              message: data.msg,
+              type: 'success',
+              duration: 1500,
+              onClose: () => {
+                this.getList()
+              }
+            })
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
+      }).catch(() => {
+
       })
     }
   }
