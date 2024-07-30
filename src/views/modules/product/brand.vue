@@ -14,7 +14,12 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
       <el-table-column prop="id" header-align="center" align="center" label="品牌id"> </el-table-column>
       <el-table-column prop="name" header-align="center" align="center" label="品牌名称"> </el-table-column>
-      <el-table-column prop="logo" header-align="center" align="center" label="品牌logo"> </el-table-column>
+      <el-table-column prop="logo" header-align="center" align="center" label="品牌logo">
+        <template slot-scope="scope">
+          <!-- <el-image :src="scope.row.logo" fit="fill"/> -->
+          <img :src="scope.row.logo" style="width: 100px; height: 80px" />
+        </template>
+      </el-table-column>
       <el-table-column prop="description" header-align="center" align="center" label="介绍"> </el-table-column>
 
       <el-table-column prop="isShow" header-align="center" align="center" label="是否显示">

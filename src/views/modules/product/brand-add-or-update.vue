@@ -5,13 +5,13 @@
         <el-input v-model="dataForm.name" placeholder="品牌名称"></el-input>
       </el-form-item>
       <el-form-item label="品牌logo" prop="logo">
-        <el-input v-model="dataForm.logo" placeholder="品牌logo"></el-input>
+        <single-upload v-model="dataForm.logo" />
       </el-form-item>
       <el-form-item label="介绍" prop="description">
         <el-input v-model="dataForm.description" placeholder="介绍"></el-input>
       </el-form-item>
       <el-form-item label="是否显示" prop="isShow">
-        <el-switch v-model="dataForm.isShow" :active-value="1" :inactive-value="0" active-color="#13ce66" inactive-color="#ff4949"/> 
+        <el-switch v-model="dataForm.isShow" :active-value="1" :inactive-value="0" active-color="#13ce66" inactive-color="#ff4949" />
       </el-form-item>
       <el-form-item label="排序值" prop="sortOrder">
         <el-input v-model="dataForm.sortOrder" placeholder="排序值"></el-input>
@@ -28,7 +28,11 @@
 </template>
 
 <script>
+import singleUpload from '@/components/upload/singleUpload'
 export default {
+  components: {
+    singleUpload
+  },
   data () {
     return {
       visible: false,
@@ -38,8 +42,8 @@ export default {
         name: [
           { required: true, message: '品牌名称不能为空', trigger: 'blur' }
         ],
-        isShow: [
-          { required: true, message: '是否显示（不能为空', trigger: 'blur' }
+        logo: [
+          { required: true, message: '品牌logo地址不能为空', trigger: 'blur' }
         ]
       },
       url: {
