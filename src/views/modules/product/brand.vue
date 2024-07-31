@@ -36,8 +36,10 @@
       </el-table-column>
 
       <el-table-column prop="firstLetter" header-align="center" align="center" label="检索首字母"> </el-table-column>
-      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+      <el-table-column prop="sortOrder" header-align="center" align="center" label="排序"> </el-table-column>
+      <el-table-column fixed="right" header-align="center" align="center" width="180" label="操作">
         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="updateCatelogHandle(scope.row.id)">关联分类</el-button>
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
@@ -54,13 +56,20 @@
     >
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />
+    <!-- 关联分类组件 -->
+    <associative-classification ref="associativeClassification" />
   </div>
 </template>
 
 <script>
-import AddOrUpdate from './brand-add-or-update'
+import addOrUpdate from './brand-add-or-update'
+import associativeClassification from '../common/associativeClassification'
 export default {
+  components: {
+    addOrUpdate,
+    associativeClassification
+  },
   data () {
     return {
       query: {
@@ -81,16 +90,16 @@ export default {
       }
     }
   },
-  components: {
-    AddOrUpdate
-  },
-  computed: {
 
-  },
   created () {
     this.getDataList()
   },
   methods: {
+    updateCatelogHandle (id) {
+      this.$nextTick(() => {
+        this.$refs.associativeClassification.init(id)
+      })
+    },
     updateBrandStatus (data) {
       console.log('updateBrandStatus', data)
       let { id, isShow } = data
