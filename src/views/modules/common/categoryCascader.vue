@@ -1,5 +1,12 @@
 <template>
-  <el-cascader filterable clearable placeholder="试试搜索：手机" v-model="paths" :options="dataSource" :props="defaultProps"> </el-cascader>
+  <el-cascader
+    filterable
+    clearable
+    placeholder="试试搜索：手机"
+    v-model="paths"
+    :options="dataSource"
+    :props="defaultProps"
+  />
 </template>
 
 <script>
@@ -8,11 +15,9 @@ export default {
   components: {},
   // 接受父组件传来的值
   props: {
-    catelogPath: {
+    categoryPath: {
       type: Array,
-      default () {
-        return []
-      }
+      default: () => []
     }
   },
   data () {
@@ -24,34 +29,36 @@ export default {
         label: 'categoryName'
       },
       dataSource: [],
-      paths: this.catelogPath
+      paths: this.categoryPath
     }
   },
   watch: {
-    catelogPath (v) {
-      console.log('catelogPath', v)
-      this.paths = this.catelogPath
+    categoryPath (newPath) {
+      this.$emit('update:categoryPath', newPath)
     },
-    paths (v) {
-      console.log('paths', v)
-      this.$emit('update:catelogPath', v)
-      // 还可以使用pubsub-js进行传值
-      // this.PubSub.publish('catPath', v)
+    paths (newPath) {
+      this.$emit('update:categoryPath', newPath)
     }
   },
   // 方法集合
   methods: {
-    getCategorys () {
+    getList () {
       this.$http({
         url: this.$http.adornUrl('/product/category/listWithTree'),
         method: 'get'
       }).then(({ data }) => {
         this.dataSource = data.data
       })
+    },
+    clearInput () {
+      console.log('clearInput')
+      // 清空 categoryPath
+      this.paths = []
+      // this.$emit('update:categoryPath', [])
     }
   },
   created () {
-    this.getCategorys()
+    this.getList()
   }
 }
 </script>

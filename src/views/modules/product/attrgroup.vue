@@ -12,6 +12,7 @@
             </el-form-item>
             <el-form-item>
               <el-button @click="query()">查询</el-button>
+              <el-button @click="reset()">重置</el-button>
               <el-button type="primary" @click="handleAdd()">新增</el-button>
             </el-form-item>
           </el-form>
@@ -49,6 +50,7 @@ export default {
     return {
       dataSource: [],
       loading: false,
+      catelogPath: [],
       queryModel: {
         key: '',
         categoryId: ''
@@ -63,6 +65,10 @@ export default {
     this.getList()
   },
   methods: {
+    reset () {
+      this.queryModel = {}
+      this.getList()
+    },
     handleAdd () {
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
