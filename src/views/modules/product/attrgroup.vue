@@ -25,9 +25,10 @@
             <el-table-column prop="description" header-align="center" align="center" label="描述"></el-table-column>
             <el-table-column prop="icon" header-align="center" align="center" label="组图标"></el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-              <template slot-scope="scope">
-                <el-button type="text" size="small" @click="handleEdit(scope.row.id)">修改</el-button>
-                <el-button type="text" size="small" @click="handleDelete(scope.row.id)">删除</el-button>
+              <template slot-scope="{ row }">
+                <el-button type="text" size="small" @click="handleRelation(row)">关联</el-button>
+                <el-button type="text" size="small" @click="handleEdit(row.id)">修改</el-button>
+                <el-button type="text" size="small" @click="handleDelete(row.id)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -35,16 +36,19 @@
       </el-col>
     </el-row>
     <add-or-update ref="addOrUpdate" @refreshDataList="getList" />
+    <attr-group-relation ref="attrGroupRelation" />
   </div>
 </template>
 
 <script>
 import categoryTree from '../common/categoryTree'
-import addOrUpdate from './attrgroup-add-or-update.vue'
+import addOrUpdate from './attrgroup-add-or-update'
+import attrGroupRelation from './attrgroup-relation'
 export default {
   components: {
     categoryTree,
-    addOrUpdate
+    addOrUpdate,
+    attrGroupRelation
   },
   data () {
     return {
@@ -88,7 +92,7 @@ export default {
         this.$http({
           url: this.$http.adornUrl(this.url.delete),
           method: 'post',
-          params: this.$http.adornParams({id: id})
+          params: this.$http.adornParams({ id: id })
         }).then(({ data }) => {
           if (data && data.code === 200) {
             this.$message({
@@ -127,6 +131,11 @@ export default {
         }
       }).finally(() => {
         this.loading = false
+      })
+    },
+    handleRelation (data) {
+      this.$nextTick(() => {
+        this.$refs.attrGroupRelation.init(data.id, data.categoryId)
       })
     }
   }
