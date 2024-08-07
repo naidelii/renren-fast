@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import singleUpload from '@/components/upload/singleUpload'
+import singleUpload from '../common/upload/singleUpload'
 export default {
   components: {
     singleUpload

@@ -1,5 +1,4 @@
 <template>
-   
   <div>
     <el-upload
       :action="uploadAction"

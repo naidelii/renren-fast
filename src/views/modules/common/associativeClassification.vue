@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="关联分类" :visible.sync="dialogVisible" width="50%">
     <el-popover placement="right-end" v-model="popCatelogSelectVisible">
-      <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
+      <category-cascader :categoryPath.sync="categoryPath"></category-cascader>
       <div style="text-align: right; margin-top: 20px">
         <el-button size="mini" type="text" @click="popCatelogSelectVisible = false">取消</el-button>
         <el-button type="primary" size="mini" @click="addCatelogSelect">确定</el-button>
@@ -19,7 +19,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <span slot="footer" class="dialog-footer" style="margin-top:10px">
+    <span slot="footer" class="dialog-footer" style="margin-top: 10px">
       <el-button @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
     </span>
@@ -36,7 +36,8 @@ export default {
   data () {
     return {
       brandId: '',
-      catelogPath: [],
+      categoryId: '',
+      categoryPath: [],
       dialogVisible: false,
       popCatelogSelectVisible: false,
       cateRelationTableData: [],
@@ -44,6 +45,12 @@ export default {
         listByBrandId: '/product/categoryBrand/listByBrandId',
         delete: '/product/categoryBrand/delete'
       }
+    }
+  },
+  watch: {
+    // 监听 categoryPath 的变化
+    categoryPath (newPath) {
+      this.categoryId = newPath[newPath.length - 1]
     }
   },
   created () {
@@ -55,12 +62,17 @@ export default {
       this.brandId = id
       this.getList()
     },
+
     addCatelogSelect () {
       this.popCatelogSelectVisible = false
+      const reqData = {
+        brandId: this.brandId,
+        categoryId: this.categoryId
+      }
       this.$http({
         url: this.$http.adornUrl('/product/categoryBrand/save'),
         method: 'post',
-        data: this.$http.adornData({brandId: this.brandId, categoryId: this.catelogPath[this.catelogPath.length - 1]}, false)
+        data: this.$http.adornData(reqData, false)
       }).then(({ data }) => {
         console.log('data', data)
         if (data && data.code === 200) {
@@ -106,7 +118,6 @@ export default {
           brandId: this.brandId
         })
       }).then(({ data }) => {
-        console.log('data', data)
         this.cateRelationTableData = data.data
       })
     }

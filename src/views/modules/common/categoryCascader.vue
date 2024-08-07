@@ -1,12 +1,5 @@
 <template>
-  <el-cascader
-    filterable
-    clearable
-    placeholder="试试搜索：手机"
-    v-model="paths"
-    :options="dataSource"
-    :props="defaultProps"
-  />
+  <el-cascader filterable clearable placeholder="试试搜索：手机" v-model="paths" :options="dataSource" :props="defaultProps" />
 </template>
 
 <script>
@@ -29,15 +22,21 @@ export default {
         label: 'categoryName'
       },
       dataSource: [],
+      // 接收第一次传过来的数据
       paths: this.categoryPath
     }
   },
   watch: {
+    // 监听父组件的变化，用于清空
     categoryPath (newPath) {
-      this.$emit('update:categoryPath', newPath)
+      this.paths = newPath
     },
+    // 监听子组件的变化，修改后将变化传递给父组件
     paths (newPath) {
+      // 将 newPath 的值传递给父组件，从而更新父组件中的 categoryPath 值。
       this.$emit('update:categoryPath', newPath)
+      // 通过pubsub-js进行传值
+      this.PubSub.publish('categoryPath', newPath)
     }
   },
   // 方法集合
@@ -49,12 +48,6 @@ export default {
       }).then(({ data }) => {
         this.dataSource = data.data
       })
-    },
-    clearInput () {
-      console.log('clearInput')
-      // 清空 categoryPath
-      this.paths = []
-      // this.$emit('update:categoryPath', [])
     }
   },
   created () {

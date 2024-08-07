@@ -123,11 +123,15 @@ export default {
         this.add()
       }
     },
+    resetData (title, formData = {}) {
+      this.categoryPath = []
+      this.valueSelects = []
+      this.attrGroups = []
+      this.title = title
+      this.dataForm = { ...this.getDefaultDataForm(), ...formData }
+      this.visible = true
+    },
     add () {
-      // this.$nextTick(() => {
-      // // 清空 categoryCascader 组件的内部状态
-      //   this.$refs.categoryCascader.clearInput()
-      // })
       this.resetData('添加')
     },
     edit (id) {
@@ -160,14 +164,7 @@ export default {
         }
       })
     },
-    resetData (title, formData = {}) {
-      this.categoryPath = []
-      this.valueSelects = []
-      this.attrGroups = []
-      this.title = title
-      this.dataForm = { ...this.getDefaultDataForm(), ...formData }
-      this.visible = true
-    },
+
     getDefaultDataForm () {
       return {
         id: null,
