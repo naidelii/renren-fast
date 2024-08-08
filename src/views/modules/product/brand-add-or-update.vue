@@ -1,11 +1,11 @@
 <template>
   <el-dialog :title="title" :close-on-click-modal="false" :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="100px">
-      <el-form-item label="品牌名称" prop="name">
-        <el-input v-model="dataForm.name" placeholder="品牌名称"></el-input>
+      <el-form-item label="品牌名称" prop="brandName">
+        <el-input v-model="dataForm.brandName" placeholder="品牌名称"></el-input>
       </el-form-item>
-      <el-form-item label="品牌logo" prop="logo">
-        <single-upload v-model="dataForm.logo" />
+      <el-form-item label="品牌logo" prop="logoUrl">
+        <single-upload v-model="dataForm.logoUrl" />
       </el-form-item>
       <el-form-item label="介绍" prop="description">
         <el-input v-model="dataForm.description" placeholder="介绍"></el-input>
@@ -39,10 +39,10 @@ export default {
       dataForm: this.getDefaultDataForm(),
       title: '',
       dataRule: {
-        name: [
+        brandName: [
           { required: true, message: '品牌名称不能为空', trigger: 'blur' }
         ],
-        logo: [
+        logoUrl: [
           { required: true, message: '品牌logo地址不能为空', trigger: 'blur' }
         ]
       },
@@ -57,8 +57,8 @@ export default {
     getDefaultDataForm () {
       return {
         id: null,
-        name: '',
-        logo: '',
+        brandName: '',
+        logoUrl: '',
         description: '',
         isShow: 0,
         sortOrder: 0,

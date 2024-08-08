@@ -50,16 +50,16 @@
             </el-table-column>
 
             <el-table-column prop="icon" header-align="center" align="center" label="图标" />
-            <el-table-column prop="enable" header-align="center" align="center" label="是否启用">
+            <el-table-column prop="isEnable" header-align="center" align="center" label="是否启用">
               <template slot-scope="scope">
-                <i class="el-icon-success" v-if="scope.row.enable == 1"></i>
+                <i class="el-icon-success" v-if="scope.row.isEnable == 1"></i>
                 <i class="el-icon-error" v-else></i>
               </template>
             </el-table-column>
 
-            <el-table-column prop="isShow" header-align="center" align="center" label="是否快速展示">
+            <el-table-column prop="isQuickShow" header-align="center" align="center" label="是否快速展示">
               <template slot-scope="{ row }">
-                <i :class="row.isShow === 1 ? 'el-icon-success' : 'el-icon-error'"></i>
+                <i :class="row.isQuickShow === 1 ? 'el-icon-success' : 'el-icon-error'"></i>
               </template>
             </el-table-column>
 

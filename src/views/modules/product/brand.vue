@@ -2,7 +2,7 @@
   <div class="mod-config">
     <el-form :inline="true" :model="query" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="query.name" placeholder="品牌名" clearable></el-input>
+        <el-input v-model="query.brandName" placeholder="品牌名" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -13,11 +13,10 @@
     <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%">
       <el-table-column type="selection" header-align="center" align="center" width="50"> </el-table-column>
       <el-table-column prop="id" header-align="center" align="center" label="品牌id"> </el-table-column>
-      <el-table-column prop="name" header-align="center" align="center" label="品牌名称"> </el-table-column>
-      <el-table-column prop="logo" header-align="center" align="center" label="品牌logo">
-        <template slot-scope="scope">
-          <!-- <el-image :src="scope.row.logo" fit="fill"/> -->
-          <img :src="scope.row.logo" style="width: 100px; height: 80px" />
+      <el-table-column prop="brandName" header-align="center" align="center" label="品牌名称"> </el-table-column>
+      <el-table-column prop="logoUrl" header-align="center" align="center" label="品牌logo">
+        <template slot-scope="{ row }">
+          <el-image :src="row.logoUrl" fit="fill" />
         </template>
       </el-table-column>
       <el-table-column prop="description" header-align="center" align="center" label="介绍"> </el-table-column>
@@ -73,7 +72,7 @@ export default {
   data () {
     return {
       query: {
-        name: ''
+        brandName: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -128,7 +127,7 @@ export default {
         params: this.$http.adornParams({
           'page': this.pageIndex,
           'limit': this.pageSize,
-          'name': this.query.name
+          'brandName': this.query.brandName
         })
       }).then(({ data }) => {
         if (data && data.code === 200) {

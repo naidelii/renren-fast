@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-select placeholder="请选择" v-model="brandId" filterable clearable>
-      <el-option v-for="item in dataSource" :key="item.id" :label="item.name" :value="item.id"></el-option>
+      <el-option v-for="item in dataSource" :key="item.id" :label="item.brandName" :value="item.id"></el-option>
     </el-select>
   </div>
 </template>

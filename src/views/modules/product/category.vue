@@ -16,8 +16,8 @@
         <el-form-item label="分类名称">
           <el-input v-model="dataForm.categoryName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="图标">
-          <el-input v-model="dataForm.img" autocomplete="off"></el-input>
+        <el-form-item label="图片">
+          <el-input v-model="dataForm.imageUrl" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -62,7 +62,7 @@ export default {
         parentId: '',
         sortOrder: 0,
         level: 0,
-        img: ''
+        imageUrl: ''
       }
     },
     getList () {

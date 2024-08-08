@@ -5,8 +5,7 @@
         <el-input v-model="dataForm.attrName" placeholder="属性名" />
       </el-form-item>
       <el-form-item label="属性类型" prop="attrType">
-        <el-select v-model="dataForm.attrType" placeholder="请选择">
-          <el-option label="规格参数" :value="1"></el-option>
+        <el-select v-model="dataForm.attrType" disabled placeholder="请选择">
           <el-option label="销售属性" :value="0"></el-option>
         </el-select>
       </el-form-item>
@@ -28,18 +27,18 @@
       <el-form-item label="可检索" prop="isSearch">
         <el-switch v-model="dataForm.isSearch" active-color="#13ce66" inactive-color="#ff4949" :active-value="1" :inactive-value="0" />
       </el-form-item>
-      <el-form-item label="启用状态" prop="enable">
+      <el-form-item label="启用状态" prop="isEnable">
         <el-switch
-          v-model="dataForm.enable"
+          v-model="dataForm.isEnable"
           active-color="#13ce66"
           inactive-color="#ff4949"
           :active-value="1"
           :inactive-value="0"
         ></el-switch>
       </el-form-item>
-      <el-form-item label="快速展示" prop="isShow">
+      <el-form-item label="快速展示" prop="isQuickShow">
         <el-switch
-          v-model="dataForm.isShow"
+          v-model="dataForm.isQuickShow"
           active-color="#13ce66"
           inactive-color="#ff4949"
           :active-value="1"
@@ -152,8 +151,8 @@ export default {
         attrType: 0,
         valueType: 0,
         isSearch: 0,
-        isShow: 0,
-        enable: 0
+        isQuickShow: 0,
+        isEnable: 0
       }
     },
     dataFormSubmit () {
