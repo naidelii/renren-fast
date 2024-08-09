@@ -4,7 +4,9 @@
       <div class="site-content">
         <div class="brand-info">
           <h2 class="brand-info__text">renren-fast-vue</h2>
-          <p class="brand-info__intro">renren-fast-vue基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案。</p>
+          <p class="brand-info__intro">
+            renren-fast-vue基于vue、element-ui构建开发，实现renren-fast后台管理前端功能，提供一套更优的前端解决方案。
+          </p>
         </div>
         <div class="login-main">
           <h3 class="login-title">管理员登录</h3>
@@ -38,7 +40,7 @@
 <script>
 import { getUUID } from '@/utils'
 export default {
-  data() {
+  data () {
     return {
       dataForm: {
         userName: '',
@@ -54,12 +56,12 @@ export default {
       captchaPath: ''
     }
   },
-  created() {
+  created () {
     this.getCaptcha()
   },
   methods: {
     // 提交表单
-    dataFormSubmit() {
+    dataFormSubmit () {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           this.$http({
@@ -84,7 +86,7 @@ export default {
       })
     },
     // 获取验证码
-    getCaptcha() {
+    getCaptcha () {
       let key = getUUID()
       // this.captchaPath = this.$http.adornUrl(`/sys/captcha?key=${key}`)
       this.$http({
