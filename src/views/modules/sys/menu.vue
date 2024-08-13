@@ -74,7 +74,6 @@
       >
         <template slot-scope="scope">
           <el-button
-            v-if="isAuth('sys:permission:update')"
             type="text"
             size="small"
             @click="addOrUpdateHandle(scope.row.id)"

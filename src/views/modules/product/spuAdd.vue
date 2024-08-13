@@ -34,12 +34,12 @@ export default {
       step: 0,
       spuModel: {
         spuName: '',
-        description: '',
         categoryId: '',
         brandId: '',
-        weight: '',
-        bounds: {},
-        baseAttrs: []
+        shortDescription: '',
+        detailedDescription: '',
+        publishStatus: 1,
+        imageList: []
       },
       url: {
       }

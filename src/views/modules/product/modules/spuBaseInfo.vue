@@ -5,7 +5,7 @@
         <el-input v-model="spuModel.spuName"></el-input>
       </el-form-item>
       <el-form-item label="商品描述" prop="description">
-        <el-input v-model="spuModel.description"></el-input>
+        <el-input v-model="spuModel.shortDescription"></el-input>
       </el-form-item>
       <el-form-item label="选择分类" prop="categoryId">
         <category-cascader />
@@ -13,28 +13,11 @@
       <el-form-item label="选择品牌" prop="brandId">
         <brand-select />
       </el-form-item>
-      <el-form-item label="商品重量(Kg)" prop="weight">
-        <el-input-number v-model="spuModel.weight" :min="0" :precision="3" :step="0.1"></el-input-number>
-      </el-form-item>
-      <el-form-item label="设置积分" prop="bounds">
-        <label>金币</label>
-        <el-input-number
-          style="width: 130px"
-          placeholder="金币"
-          v-model="spuModel.bounds.buyBounds"
-          :min="0"
-          controls-position="right"
-        ></el-input-number>
-        <label style="margin-left: 15px">成长值</label>
-        <el-input-number style="width: 130px" placeholder="成长值" v-model="spuModel.bounds.growBounds" :min="0" controls-position="right">
-          <template slot="prepend">成长值</template>
-        </el-input-number>
-      </el-form-item>
-      <el-form-item label="商品介绍" prop="decript">
-        <multi-upload v-model="spuModel.decript"></multi-upload>
+      <el-form-item label="商品详情" prop="decript">
+        <editor ref="editor"/>
       </el-form-item>
       <el-form-item label="商品图集" prop="images">
-        <multi-upload v-model="spuModel.images"></multi-upload>
+        <multi-upload v-model="spuModel.images" :dirPath="dirPath" @uploadSuccess="handleImagesUploadSuccess"></multi-upload>
       </el-form-item>
       <el-form-item>
         <el-button type="success" @click="nextStep">下一步：设置基本参数</el-button>
@@ -47,13 +30,15 @@
 import categoryCascader from '../../common/categoryCascader'
 import brandSelect from '../../common/brandSelect'
 import multiUpload from '../../common/upload/multiUpload'
+import editor from '../../common/editor.vue'
 
 export default {
   name: '',
   components: {
     categoryCascader,
     brandSelect,
-    multiUpload
+    multiUpload,
+    editor
   },
   props: {
     spuModel: Object,
@@ -64,7 +49,8 @@ export default {
       // 发布订阅
       catPathSub: null,
       brandIdSub: null,
-
+      // 图片保存路径
+      dirPath: 'spu',
       spuRules: {
         spuName: [
           { required: true, message: '商品名称不能为空', trigger: 'blur' }
@@ -91,12 +77,16 @@ export default {
   created () { },
 
   methods: {
+    handleImagesUploadSuccess (fileList) {
+      this.spuModel.imageList = fileList
+    },
     nextStep () {
-      this.$refs.spuBaseForm.validate(valid => {
-        if (valid) {
-          this.$emit('next-step')
-        }
-      })
+      console.log('this.spuModel', this.spuModel)
+      // this.$refs.spuBaseForm.validate(valid => {
+      //   if (valid) {
+      //     this.$emit('next-step')
+      //   }
+      // })
     }
   }
 }
